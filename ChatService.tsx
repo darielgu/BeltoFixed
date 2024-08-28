@@ -5,19 +5,20 @@ const API_BASE_URL = "http://127.0.0.1:6968";
 
     class ChatService {
 
-        // Since your server only has the /completion endpoint, let's focus on that
+        
         createCompletion(chat: { text: string; sender: string; }) {
-            const prompt = chat.text;
-            const n_predict = 200;
-            const stream = false;  // Set to true if you want to handle streaming
+            const prompt = chat.text; //Extract the prompt from the chat object
+            const n_predict = 200; // I am setting a a value of 200tokens for n_predict
+            const stream = false;  // added this which allows to se if streaming with cors 
         
             return axios.post(`${API_BASE_URL}/completion`, {
-                prompt,
-                n_predict,
-                stream
+                prompt, // return the prompt
+                n_predict, //return the n_predict
+                stream //return the stream option
             });
         }
-
+//This is the original code that was in the ChatService.tsx file, It is unsed in the current implementation
+//I am commenting it out to avoid confusion
 //     getModels(){
 //         return axios.get(`${API_BASE_URL}/models`);
 //     }

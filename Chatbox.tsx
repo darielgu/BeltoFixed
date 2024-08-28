@@ -18,17 +18,17 @@ const Chatbox: React.FC<ChatboxProps> = ({ chatHistory, setChatHistory, onMessag
 
     const handleSendMessage = async () => {
       
-      setChatHistory(prev => [...prev, { text: message, sender: 'user' }]);
+      setChatHistory(prev => [...prev, { text: message, sender: 'user' }]); //Insted of pulling from ...chatHistory, I'm pulling from prev
       try {
-        const response = await ChatService.createCompletion({ text: message, sender: 'user' });
-        const responseContent = response.data.content;
-        setChatHistory(prev => [...prev, { text: responseContent, sender: 'server' }]);
+        const response = await ChatService.createCompletion({ text: message, sender: 'user' });  //This sends the user's message to the server
+        const responseContent = response.data.content; //This gets the response from the server
+        setChatHistory(prev => [...prev, { text: responseContent, sender: 'server' }]); //This adds the server's response to the chat history, I changed  variable to responseContent
       } catch (error) {
         console.error('Error sending message:', error);
-        setChatHistory(prev => [...prev, { text: "Sorry, there was an error processing your request.", sender: 'server' }]);
+        setChatHistory(prev => [...prev, { text: "Sorry, there was an error processing your request.", sender: 'server' }]); // added some error handling here
       }
-      onMessageSend();
-      setMessage('');
+      onMessageSend();//moved this line of code so that the chatbox scrolls to the bottom after the message is sent
+      setMessage(''); //This clears the message input after the message is sent
     };
 
     return (
